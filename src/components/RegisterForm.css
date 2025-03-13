@@ -1,0 +1,10 @@
+.register-form{
+    border: 1px;
+}
+.input-container{
+    display: flex;
+    flex-direction: column;
+}
+.form-input{
+    margin: 10px;
+}
