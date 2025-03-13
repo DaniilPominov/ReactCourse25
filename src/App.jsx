@@ -44,21 +44,50 @@ function App() {
     if (!name) return;
 
     try {
- //     const {data, error} = await supabase.from("users").insert({ name });
+      const {data, error} = await supabase.from("users").insert([{ name }]).select();
+      if (error) 
+        console.error(error);
+      else {
+        if (data && data.length > 0) {
+          setUsers((prevUsers) => [...prevUsers, data[0]]);
+        }
+        setName("");
+        inputRef.current.focus();
+      }
     }
-  });
+      catch (err) {
+        console.error("Ошибка добавления пользователя:", err);
+      }
+    }, [name]);
+  
+    const userCount = useMemo (() => users.length, [users])
+
   return (
     <>
     <div>
-        <Welcome name={"World"}/>
-    </div>
-    <div>
-        <Counter/>
-
-    </div>
-    <div>
-        <Form/>
-        
+        <h1>React Hooks</h1>
+        <div className="input-container">
+        <input
+          ref={inputRef}
+          type="text"
+          placeholder="Enter name"
+          value="name"
+          onChange={(e) => setName(e.target.value)}
+        />
+        <button onClick={addUser}>Add User</button>
+        </div>
+        <h2>Users ({userCount}):</h2>
+        <ul>
+          {users.map((user) => (
+            <li key={user.id}>{user.name}</li>
+          ))}
+        </ul>
+        <div>
+          <h2>Example of useReducer</h2>
+          <p>Amount: {state.count}</p>
+          <button onClick={() => dispatch({ type: "Increment" })}>+</button>
+          <button onClick={() => dispatch({ type: "Decrement" })}>-</button>
+        </div>
     </div>
 
  
