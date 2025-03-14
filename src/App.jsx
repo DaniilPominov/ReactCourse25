@@ -46,20 +46,24 @@ function App() {
       }
     };
     const  GetUser = async (name,password) =>{
-      try{
-      const myHash = password;//bcrypt.hashSync(password, 10);
+      try{;
       const {data, error} = await supabase.from('users')
       .select('*')
       .eq('name', name)
-      .eq('hashedPassword', myHash)
       .single();
+      
       
       if (error) 
           console.error(error);
 
       else{
-              
-              return data;
+              const storedHash = data.hashedPassword;
+              if(storedHash){
+                if(bcrypt.compareSync(password, storedHash)){
+                  return data;
+                }
+              }
+              return;
           }
       }
       catch (err) {
