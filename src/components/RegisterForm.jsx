@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState, useEffect, useRef, useMemo, useCallback, useReducer } from 'react'
-import bcrypt from "bcryptjs";
-import { v4 as uuidv4 } from 'uuid';
+
 import './RegisterForm.css';
 function RegisterForm(props){
     const supabase = props.sender;
@@ -10,30 +9,8 @@ function RegisterForm(props){
     const passRef = useRef(0);
     const setUsers = props.setUsers;
     const [password, setPassword] = useState("");
-    const addUser = useCallback(async (e) => {
-        e.preventDefault();
-        if(!name) return;
-        try {
-            const hashedPassword = bcrypt.hashSync(password, 10);
-          // Insert user into the database
-          const {data, error} = await supabase.from("users").insert([{id:uuidv4(),name:name,hashedPassword:hashedPassword}]).select();
-          if (error) 
-            console.error(error);
-          else {
-            if (data && data.length > 0) {
-              setUsers((prevUsers) => [...prevUsers, data[0]]);
-            }
-            setName("");
-            setPassword("");
-            inputRef.current.focus();
-            passRef.current.focus();
-          }
-        }
-          catch (err) {
-            console.error("Ошибка добавления пользователя:", err);
-          }
-        }, [name]);
-
+    const addUser = props.action;
+    
     return (
         <form className='register-form'>
             <div className="input-container">
@@ -57,7 +34,14 @@ function RegisterForm(props){
             e.preventDefault();
             setPassword(e.target.value)}}
         />
-        <button onClick={addUser}>Add User</button>
+        <button onClick={(e) => {
+          e.preventDefault();
+          addUser(name,password);
+        setName("");
+        setPassword("");
+        inputRef.current.focus();
+        passRef.current.focus();
+        }}>Add User</button>
         </div>
         </form>
     )

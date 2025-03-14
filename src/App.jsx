@@ -1,4 +1,6 @@
 import './App.css'
+import bcrypt from "bcryptjs";
+import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect, useRef, useMemo, useCallback, useReducer } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import LoginForm from './components/LoginForm';
@@ -24,6 +26,27 @@ function App() {
   const [currentUser, setCurrentUser] = useState();
   const [state, dispatch] = useReducer(reducer, { count: 0 });
 
+  const addUser = async (name,password) => {
+    if(!name) return;
+    try {
+        const hashedPassword = bcrypt.hashSync(password, 10);
+      // Insert user into the database
+      const {data, error} = await supabase.from("users").insert([{id:uuidv4(),name:name,hashedPassword:hashedPassword}]).select();
+      if (error) 
+        console.error(error);
+      else {
+        if (data && data.length > 0) {
+          setUsers((prevUsers) => [...prevUsers, data[0]]);
+        }
+        
+      }
+    }
+      catch (err) {
+        console.error("Ошибка добавления пользователя:", err);
+      }
+    };
+
+
   const fetchUsers = useCallback(async () => {
     const { data, error } = await supabase
       .from('users')
@@ -47,7 +70,7 @@ function App() {
     <>
     <div>
         <h1>React Hooks</h1>
-        <RegisterForm sender={supabase} setUsers={setUsers}/>
+        <RegisterForm sender={supabase} setUsers={setUsers} action={addUser}/>
         <h2>Try to login</h2>
         <LoginForm sender={supabase} setCurrentUser={setCurrentUser}/>
         <h2>Current User: {currentUser?.name}</h2>
