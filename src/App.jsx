@@ -45,6 +45,28 @@ function App() {
         console.error("Ошибка добавления пользователя:", err);
       }
     };
+    const  GetUser = async (name,password) =>{
+      try{
+      const myHash = password;//bcrypt.hashSync(password, 10);
+      const {data, error} = await supabase.from('users')
+      .select('*')
+      .eq('name', name)
+      .eq('hashedPassword', myHash)
+      .single();
+      
+      if (error) 
+          console.error(error);
+
+      else{
+              
+              return data;
+          }
+      }
+      catch (err) {
+          console.error("Ошибка добавления пользователя:", err);
+        }
+      
+  }
 
 
   const fetchUsers = useCallback(async () => {
@@ -72,7 +94,7 @@ function App() {
         <h1>React Hooks</h1>
         <RegisterForm sender={supabase} setUsers={setUsers} action={addUser}/>
         <h2>Try to login</h2>
-        <LoginForm sender={supabase} setCurrentUser={setCurrentUser}/>
+        <LoginForm sender={supabase} setCurrentUser={setCurrentUser} action={GetUser}/>
         <h2>Current User: {currentUser?.name}</h2>
         <h2>Users ({userCount}):</h2>
         <ul>

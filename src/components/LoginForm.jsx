@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useMemo, useCallback, useReducer } from 'react'
-import bcrypt from "bcryptjs";
 import './RegisterForm.css';
 function LoginForm(props){
     const supabase = props.sender;
@@ -7,32 +6,10 @@ function LoginForm(props){
     const inputRef = useRef(0);
     const passRef = useRef(0);
     const [password, setPassword] = useState("");
+    const LoginUser = props.action;
 
     const setUser = props.setCurrentUser;
-    const  GetUser = async (e) =>{
-        e.preventDefault();
-        try{
-        const myHash = password;//bcrypt.hashSync(password, 10);
-        const {data, error} = await supabase.from('users')
-        .select('*')
-        .eq('name', name)
-        .eq('hashedPassword', myHash)
-        .single();
-        
-        if (error) 
-            console.error(error);
-
-        else{
-                inputRef.current.className = "form-input-succces";
-            }
-        }
-        catch (err) {
-            console.error("Ошибка добавления пользователя:", err);
-          }
-        
-        
-        setUser(data);
-    }
+    
     //bcrypt.compareSync(myHash, serverHash);
     return(
         <form className='register-form'>
@@ -57,7 +34,15 @@ function LoginForm(props){
             e.preventDefault();
             setPassword(e.target.value)}}
         />
-        <button onClick={GetUser}>log in</button>
+        <button onClick={async (e)=>{
+            e.preventDefault();
+            const user = await LoginUser(name, password);
+            if(user){
+                inputRef.current.className = "form-input-succces";
+                setUser(user);
+            }
+            
+        }}>log in</button>
         </div>
         </form>
     )
