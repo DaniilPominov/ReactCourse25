@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useMemo, useCallback, useReducer } from 'react'
+import { useNavigate } from 'react-router-dom';
 import './RegisterForm.css';
 function LoginForm(props){
     const supabase = props.sender;
@@ -7,12 +8,30 @@ function LoginForm(props){
     const passRef = useRef(0);
     const [password, setPassword] = useState("");
     const LoginUser = props.action;
+    let navigate = useNavigate();
 
     const setUser = props.setCurrentUser;
-    
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+            const user = await LoginUser(name, password);
+            if(user){
+                inputRef.current.className = "form-input-succces";
+                setUser(user);
+                navigate('/home');
+            }
+            else {
+                setUser(null);
+                navigate('/')
+            }
+        } catch (e) {
+            console.error(e);
+            navigate('/');
+        }
+    }
     //bcrypt.compareSync(myHash, serverHash);
     return(
-        <form className='register-form'>
+        <form className='login-form'>
             <div className="input-container">
         <input
           ref={inputRef}
@@ -35,13 +54,7 @@ function LoginForm(props){
             setPassword(e.target.value)}}
         />
         <button onClick={async (e)=>{
-            e.preventDefault();
-            const user = await LoginUser(name, password);
-            if(user){
-                inputRef.current.className = "form-input-succces";
-                setUser(user);
-            }
-            
+            handleLogin(e);    
         }}>log in</button>
         </div>
         </form>

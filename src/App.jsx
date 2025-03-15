@@ -2,17 +2,19 @@ import './App.css'
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect, useRef, useMemo, useCallback, useReducer } from 'react'
-
+import { SupabaseContext } from './components/OnlineStore/SupabaseContext'; 
 import { createClient } from '@supabase/supabase-js'
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import { Route, Routes, Outlet } from 'react-router-dom';
-import Cart from './components/OnlineStore/Cart';
-import Catalog from './components/OnlineStore/Catalog';
+import Cart from './components/OnlineStore/pages/Cart';
+import Catalog from './components/OnlineStore/pages/Catalog';
 import Header from './components/OnlineStore/Header';
 import Footer from './components/OnlineStore/Footer';
-import Home from './components/OnlineStore/Home';
-import Product from './components/OnlineStore/Product';
+import CategoryProduct from './components/OnlineStore/pages/CategoryProduct';
+import Home from './components/OnlineStore/pages/Home';
+import Product from './components/OnlineStore/pages/Product';
+import CartProvider from './components/OnlineStore/CartProvider';
 const supabaseUrl = "https://svgxutgdnhlkdlwscmmq.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN2Z3h1dGdkbmhsa2Rsd3NjbW1xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE4NjIxNjksImV4cCI6MjA1NzQzODE2OX0.DA1gIxs7tBlYflBJPJe_niRMtV9pIIiREyxdoBmdVno";
 
@@ -111,14 +113,40 @@ function App() {
 
   return (
     <>
+    <SupabaseContext.Provider value={supabase}>
+      <CartProvider>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="catalog" element={<Catalog />}/>
             <Route path="cart" element={<Cart />}/>
             <Route path="home" element={<Home />}/>
-            <Route path="product/:id" element={<Product />}/>
+            <Route path="category/:id" element={<CategoryProduct />}/>
+            <Route path="products/:id" element={<Product />}/>
+            <Route path="*" element={
+              <h1>Page not found</h1>} />
           </Route>
+          
         </Routes>
+      </CartProvider>
+    </SupabaseContext.Provider>
+        <h1>React Hooks</h1>
+        <RegisterForm sender={supabase} setUsers={setUsers} action={addUser}/>
+        <h2>Try to login</h2>
+        <LoginForm sender={supabase} setCurrentUser={setCurrentUser} action={GetUser}/>
+        <h2>Current User: {currentUser?.name}</h2>
+        <h2>Users ({userCount}):</h2>
+        <ul>
+          {users.map((user) => (
+            <li key={user.id}>{user.name}</li>
+          ))}
+        </ul>
+        
+        <div>
+          <h2>Example of useReducer</h2>
+          <p>Amount: {state.count}</p>
+          <button onClick={() => dispatch({ type: "Increment" })}>+</button>
+          <button onClick={() => dispatch({ type: "Decrement" })}>-</button>
+        </div>
     </>
   )
 }

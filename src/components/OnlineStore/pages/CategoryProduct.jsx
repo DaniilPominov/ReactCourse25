@@ -1,0 +1,65 @@
+import { React, useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+import SupabaseContext from "../SupabaseContext";
+import { CartContext } from "../CartProvider";
+
+function CategoryProducts() {
+    const { id } = useParams();
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const supabase = useContext(SupabaseContext);
+    const { addToCart } = useContext(CartContext);
+
+    useEffect(() => {
+        async function fetchProducts() {
+            
+            try {
+                const { data, error } = await supabase
+                    .from('products')
+                    .select('*')
+                    .eq('category_id', id);
+                
+                    if (error) {
+                    console.error(error);
+                } else {
+                    setProducts(data);
+                }
+        } catch (error) {
+            console.error("Error fetching products:", error);
+        } finally {
+            setLoading(false);
+        }
+        
+        }
+        fetchProducts().catch((error) => {
+            console.error("Error fetching products:", error);
+        });
+    }, [id, supabase]);
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (!products || products.length === 0) {
+        return <p>No products found in this category.</p>;
+    }
+
+    return (
+        <div>
+            <h1>Products in Category {id}</h1>
+            <ul>
+                {products.map(product => (
+                    <li key={product.id}>
+                        <h2>{product.name}</h2>
+                        <p>{product.description}</p>
+                        <p>Price: ${product.price}</p>
+                        <button onClick={() => addToCart(product)}>Add to Cart</button>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )
+}
+
+export default CategoryProducts;
