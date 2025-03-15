@@ -35,12 +35,12 @@ function RegisterForm(props){
             setPassword(e.target.value)}}
         />
         <button onClick={(e) => {
-          e.preventDefault();
-          addUser(name,password);
-        setName("");
-        setPassword("");
-        inputRef.current.focus();
-        passRef.current.focus();
+            e.preventDefault();
+            addUser(name,password);
+            setName("");
+            setPassword("");
+            inputRef.current.focus();
+            passRef.current.focus();
         }}>Add User</button>
         </div>
         </form>

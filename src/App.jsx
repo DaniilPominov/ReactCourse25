@@ -2,9 +2,17 @@ import './App.css'
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect, useRef, useMemo, useCallback, useReducer } from 'react'
+
 import { createClient } from '@supabase/supabase-js'
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
+import { Route, Routes, Outlet } from 'react-router-dom';
+import Cart from './components/OnlineStore/Cart';
+import Catalog from './components/OnlineStore/Catalog';
+import Header from './components/OnlineStore/Header';
+import Footer from './components/OnlineStore/Footer';
+import Home from './components/OnlineStore/Home';
+import Product from './components/OnlineStore/Product';
 const supabaseUrl = "https://svgxutgdnhlkdlwscmmq.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN2Z3h1dGdkbmhsa2Rsd3NjbW1xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE4NjIxNjksImV4cCI6MjA1NzQzODE2OX0.DA1gIxs7tBlYflBJPJe_niRMtV9pIIiREyxdoBmdVno";
 
@@ -45,30 +53,30 @@ function App() {
         console.error("Ошибка добавления пользователя:", err);
       }
     };
-    const  GetUser = async (name,password) =>{
-      try{;
-      const {data, error} = await supabase.from('users')
-      .select('*')
-      .eq('name', name)
-      .single();
-      
-      
-      if (error) 
-          console.error(error);
+  const  GetUser = async (name,password) =>{
+    try{;
+    const {data, error} = await supabase.from('users')
+    .select('*')
+    .eq('name', name)
+    .single();
+    
+    
+    if (error) 
+        console.error(error);
 
-      else{
-              const storedHash = data.hashedPassword;
-              if(storedHash){
-                if(bcrypt.compareSync(password, storedHash)){
-                  return data;
-                }
+    else{
+            const storedHash = data.hashedPassword;
+            if(storedHash){
+              if(bcrypt.compareSync(password, storedHash)){
+                return data;
               }
-              return;
-          }
-      }
-      catch (err) {
-          console.error("Ошибка добавления пользователя:", err);
+            }
+            return;
         }
+    }
+    catch (err) {
+        console.error("Ошибка добавления пользователя:", err);
+      }
       
   }
 
@@ -87,36 +95,31 @@ function App() {
   useEffect(() => {
     fetchUsers().catch((error) => console.error("Ошибка обновления списка пользователей"))
   }, [fetchUsers]);
+  const userCount = useMemo (() => users.length, [users])
 
-  
-  
-    const userCount = useMemo (() => users.length, [users])
+  const Layout = () => {
+    return (
+      <>
+        <Header />
+        <main>
+          <Outlet />
+        </main>
+        <Footer />
+      </>
+    );
+  };
 
   return (
     <>
-    <div>
-        <h1>React Hooks</h1>
-        <RegisterForm sender={supabase} setUsers={setUsers} action={addUser}/>
-        <h2>Try to login</h2>
-        <LoginForm sender={supabase} setCurrentUser={setCurrentUser} action={GetUser}/>
-        <h2>Current User: {currentUser?.name}</h2>
-        <h2>Users ({userCount}):</h2>
-        <ul>
-          {users.map((user) => (
-            <li key={user.id}>{user.name}</li>
-          ))}
-        </ul>
-        
-        <div>
-          <h2>Example of useReducer</h2>
-          <p>Amount: {state.count}</p>
-          <button onClick={() => dispatch({ type: "Increment" })}>+</button>
-          <button onClick={() => dispatch({ type: "Decrement" })}>-</button>
-        </div>
-    </div>
-
- 
-</>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route path="catalog" element={<Catalog />}/>
+            <Route path="cart" element={<Cart />}/>
+            <Route path="home" element={<Home />}/>
+            <Route path="product/:id" element={<Product />}/>
+          </Route>
+        </Routes>
+    </>
   )
 }
 
