@@ -15,6 +15,7 @@ import CategoryProduct from './components/OnlineStore/pages/CategoryProduct';
 import Home from './components/OnlineStore/pages/Home';
 import Product from './components/OnlineStore/pages/Product';
 import CartProvider from './components/OnlineStore/CartProvider';
+import FeedbackFormPortal from './components/FeedbackFormPortal';
 const supabaseUrl = "https://svgxutgdnhlkdlwscmmq.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN2Z3h1dGdkbmhsa2Rsd3NjbW1xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE4NjIxNjksImV4cCI6MjA1NzQzODE2OX0.DA1gIxs7tBlYflBJPJe_niRMtV9pIIiREyxdoBmdVno";
 
@@ -35,6 +36,10 @@ function App() {
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState();
   const [state, dispatch] = useReducer(reducer, { count: 0 });
+
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const openForm = () => setIsFormOpen(true);
+  const closeForm = () => setIsFormOpen(false)
 
   const addUser = async (name,password) => {
     if(!name) return;
@@ -147,6 +152,12 @@ function App() {
           <button onClick={() => dispatch({ type: "Increment" })}>+</button>
           <button onClick={() => dispatch({ type: "Decrement" })}>-</button>
         </div>
+
+        <button onClick={openForm}>Open Form</button>
+            <FeedbackFormPortal
+            isOpen={isFormOpen}
+            onClose={closeForm}
+            />
     </>
   )
 }
