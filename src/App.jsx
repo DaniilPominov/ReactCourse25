@@ -6,6 +6,7 @@ import { SupabaseContext } from './components/OnlineStore/SupabaseContext';
 import { createClient } from '@supabase/supabase-js'
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
+import "./styles/index.css"
 import { Route, Routes, Outlet } from 'react-router-dom';
 import Cart from './components/OnlineStore/pages/Cart';
 import Catalog from './components/OnlineStore/pages/Catalog';
