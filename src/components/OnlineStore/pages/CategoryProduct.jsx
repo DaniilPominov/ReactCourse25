@@ -3,12 +3,14 @@ import { useParams } from "react-router-dom";
 
 import SupabaseContext from "../SupabaseContext";
 import { CartContext } from "../CartProvider";
+import { StyleContext } from "../StyleProvider";
 
 function CategoryProducts() {
     const { id } = useParams();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const supabase = useContext(SupabaseContext);
+    const {theme} = useContext(StyleContext);
     const { addToCart } = useContext(CartContext);
 
     useEffect(() => {
@@ -46,7 +48,7 @@ function CategoryProducts() {
     }
 
     return (
-        <div>
+        <div class={`${theme}-theme`}>
             <h1>Products in Category {id}</h1>
             <ul>
                 {products.map(product => (

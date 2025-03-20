@@ -1,6 +1,7 @@
 import {React, useContext, useState, useEffect} from "react";
 import SupabaseContext from "../SupabaseContext"
 import { Link } from "react-router-dom";
+import { StyleContext } from "../StyleProvider";
 
 // const products = [
 //     {id: 1, name: "Dog Food", price: "$20"},
@@ -9,6 +10,7 @@ import { Link } from "react-router-dom";
 // ]
 
 function Catalog() {
+    const {theme} = useContext(StyleContext);
     const supabase = useContext(SupabaseContext)
     const [categories, setCategories] = useState([])
     const [loading, setLoading] = useState(true)
@@ -44,7 +46,7 @@ function Catalog() {
     }
     
     return (
-        <div>
+        <div class={`${theme}-theme`}>
             <h1>Catalog</h1>
             <ul>
                 {categories.map(category => (

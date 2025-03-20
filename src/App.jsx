@@ -16,6 +16,7 @@ import Home from './components/OnlineStore/pages/Home';
 import Product from './components/OnlineStore/pages/Product';
 import CartProvider from './components/OnlineStore/CartProvider';
 import FeedbackFormPortal from './components/FeedbackFormPortal';
+import { StyleProvider } from './components/OnlineStore/StyleProvider';
 const supabaseUrl = "https://svgxutgdnhlkdlwscmmq.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN2Z3h1dGdkbmhsa2Rsd3NjbW1xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE4NjIxNjksImV4cCI6MjA1NzQzODE2OX0.DA1gIxs7tBlYflBJPJe_niRMtV9pIIiREyxdoBmdVno";
 
@@ -100,8 +101,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetchUsers().catch((error) => console.error("Ошибка обновления списка пользователей"))
+    fetchUsers().catch((error) => console.error("Ошибка обновления списка пользователей", error))
   }, [fetchUsers]);
+
+
   const userCount = useMemo (() => users.length, [users])
 
   const Layout = () => {
@@ -119,22 +122,24 @@ function App() {
   return (
     <>
     <SupabaseContext.Provider value={supabase}>
-      <CartProvider>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route path="catalog" element={<Catalog />}/>
-            <Route path="cart" element={<Cart />}/>
-            <Route path="home" element={<Home />}/>
-            <Route path="category/:id" element={<CategoryProduct />}/>
-            <Route path="products/:id" element={<Product />}/>
-            <Route path="*" element={
-              <h1>Page not found</h1>} />
-          </Route>
-          
-        </Routes>
-      </CartProvider>
+      <StyleProvider>
+        <CartProvider>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route path="catalog" element={<Catalog />}/>
+              <Route path="cart" element={<Cart />}/>
+              <Route path="home" element={<Home />}/>
+              <Route path="category/:id" element={<CategoryProduct />}/>
+              <Route path="products/:id" element={<Product />}/>
+              <Route path="*" element={
+                <h1>Page not found</h1>} />
+            </Route>
+
+          </Routes>
+        </CartProvider>
+      </StyleProvider>
     </SupabaseContext.Provider>
-        <h1>React Hooks</h1>
+        {/* <h1>React Hooks</h1>
         <RegisterForm sender={supabase} setUsers={setUsers} action={addUser}/>
         <h2>Try to login</h2>
         <LoginForm sender={supabase} setCurrentUser={setCurrentUser} action={GetUser}/>
@@ -151,7 +156,7 @@ function App() {
           <p>Amount: {state.count}</p>
           <button onClick={() => dispatch({ type: "Increment" })}>+</button>
           <button onClick={() => dispatch({ type: "Decrement" })}>-</button>
-        </div>
+        </div> */}
 
         <button onClick={openForm}>Open Form</button>
             <FeedbackFormPortal

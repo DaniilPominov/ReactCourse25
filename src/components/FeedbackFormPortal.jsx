@@ -8,6 +8,6 @@ const FeedbackFormPortal = ({ isOpen, onClose }) => {
     return ReactDOM.createPortal(
         <FeedbackForm onClose={onClose} />, portalRoot
     )
-}
+}   
 
 export default FeedbackFormPortal;
