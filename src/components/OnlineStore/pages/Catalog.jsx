@@ -1,6 +1,6 @@
 import {React, useContext, useState, useEffect} from "react";
 import SupabaseContext from "../SupabaseContext"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { StyleContext } from "../StyleProvider";
 import { AuthContext } from "../AuthContext";
 
@@ -11,6 +11,7 @@ import { AuthContext } from "../AuthContext";
 // ]
 
 function Catalog() {
+    const navigate = useNavigate();
     const {isAuth, setAuth} = useContext(AuthContext);
     const {theme} = useContext(StyleContext);
     const supabase = useContext(SupabaseContext)
@@ -19,7 +20,6 @@ function Catalog() {
 
     useEffect(() => {
         async function fetchCategories() {
-            console.log("AUTHTHTH +++===",isAuth);
             try {
                 console.log(supabase);
                 const {data, error} = await supabase
@@ -62,6 +62,7 @@ function Catalog() {
             </ul>
         </div>
     )}
+    navigate("/login")
     return ( <>NeedAuth</>)
 }
 

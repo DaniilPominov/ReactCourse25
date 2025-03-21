@@ -22,7 +22,7 @@ function LoginForm(props){
                 inputRef.current.className = "form-input-succces";       
                 setAuth(true);         
                 setUser(user);
-                navigate('/home');
+                navigate('/catalog');
             }
             else {
                 setUser(null);

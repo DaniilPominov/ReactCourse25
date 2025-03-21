@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import SupabaseContext from "../SupabaseContext";
 import { CartContext } from "../CartProvider";
 import { StyleContext } from "../StyleProvider";
+import ProductCard from "../ProductCard";
 
 function CategoryProducts() {
     const { id } = useParams();
@@ -49,15 +50,11 @@ function CategoryProducts() {
 
     return (
         <div class={`${theme}-theme`}>
-            <h1>Products in Category {id}</h1>
+            <h1>Products in Category</h1>
+            <h5>{id}</h5>
             <ul>
                 {products.map(product => (
-                    <li key={product.id}>
-                        <h2>{product.name}</h2>
-                        <p>{product.description}</p>
-                        <p>Price: ${product.price}</p>
-                        <button onClick={() => addToCart(product)}>Add to Cart</button>
-                    </li>
+                    <ProductCard product={product} action={addToCart}/>
                 ))}
             </ul>
         </div>
