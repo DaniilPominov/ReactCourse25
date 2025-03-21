@@ -135,7 +135,7 @@ function App() {
             <Route path="/" element={<Layout />}>
               <Route path="catalog" element={<Catalog />}/>
               <Route path="cart" element={<Cart />}/>
-              <Route path="login" element={<LoginForm />}/>
+              <Route path="login" element={<LoginForm sender={supabase} setCurrentUser={setCurrentUser} action={GetUser} />}/>
               <Route path="home" element={<Home />}/>
               <Route path="category/:id" element={<CategoryProduct />}/>
               <Route path="products/:id" element={<Product />}/>

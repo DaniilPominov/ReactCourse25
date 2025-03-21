@@ -14,12 +14,13 @@ function LoginForm(props){
 
     const setUser = props.setCurrentUser;
     const handleLogin = async (e) => {
-        setAuth(true);
+        
         e.preventDefault();
         try {
             const user = await LoginUser(name, password);
             if(user){
-                inputRef.current.className = "form-input-succces";                
+                inputRef.current.className = "form-input-succces";       
+                setAuth(true);         
                 setUser(user);
                 navigate('/home');
             }
