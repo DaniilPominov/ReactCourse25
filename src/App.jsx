@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect, useRef, useMemo, useCallback, useReducer } from 'react'
 import { SupabaseContext } from './components/OnlineStore/SupabaseContext'; 
 import { createClient } from '@supabase/supabase-js'
+import {AuthContext} from "./components/OnlineStore/AuthContext"
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import "./styles/index.css"
@@ -38,7 +39,7 @@ function App() {
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState();
   const [state, dispatch] = useReducer(reducer, { count: 0 });
-
+  const [isAuth,setAuth] = useState();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const openForm = () => setIsFormOpen(true);
   const closeForm = () => setIsFormOpen(false)
@@ -114,14 +115,19 @@ function App() {
         <Header />
         <main>
           <Outlet />
+          <button onClick={openForm}>Open Form</button>
+            <FeedbackFormPortal
+            isOpen={isFormOpen}
+            onClose={closeForm}
+            />
         </main>
         <Footer />
       </>
     );
   };
-
   return (
     <>
+    <AuthContext.Provider value={{isAuth, setAuth}}>
     <SupabaseContext.Provider value={supabase}>
       <StyleProvider>
         <CartProvider>
@@ -129,6 +135,7 @@ function App() {
             <Route path="/" element={<Layout />}>
               <Route path="catalog" element={<Catalog />}/>
               <Route path="cart" element={<Cart />}/>
+              <Route path="login" element={<LoginForm />}/>
               <Route path="home" element={<Home />}/>
               <Route path="category/:id" element={<CategoryProduct />}/>
               <Route path="products/:id" element={<Product />}/>
@@ -159,11 +166,8 @@ function App() {
           <button onClick={() => dispatch({ type: "Decrement" })}>-</button>
         </div> */}
 
-        <button onClick={openForm}>Open Form</button>
-            <FeedbackFormPortal
-            isOpen={isFormOpen}
-            onClose={closeForm}
-            />
+
+            </AuthContext.Provider>
     </>
   )
 }

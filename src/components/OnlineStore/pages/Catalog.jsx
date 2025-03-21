@@ -2,6 +2,7 @@ import {React, useContext, useState, useEffect} from "react";
 import SupabaseContext from "../SupabaseContext"
 import { Link } from "react-router-dom";
 import { StyleContext } from "../StyleProvider";
+import { AuthContext } from "../AuthContext";
 
 // const products = [
 //     {id: 1, name: "Dog Food", price: "$20"},
@@ -10,6 +11,7 @@ import { StyleContext } from "../StyleProvider";
 // ]
 
 function Catalog() {
+    const {isAuth, setAuth} = useContext(AuthContext);
     const {theme} = useContext(StyleContext);
     const supabase = useContext(SupabaseContext)
     const [categories, setCategories] = useState([])
@@ -17,6 +19,7 @@ function Catalog() {
 
     useEffect(() => {
         async function fetchCategories() {
+            console.log("AUTHTHTH +++===",isAuth);
             try {
                 console.log(supabase);
                 const {data, error} = await supabase
@@ -44,8 +47,9 @@ function Catalog() {
     if (loading) {
         return <div>Loading...</div>
     }
-    
+    if(isAuth){
     return (
+        
         <div class={`${theme}-theme`}>
             <h1>Catalog</h1>
             <ul>
@@ -57,7 +61,8 @@ function Catalog() {
                 ))}
             </ul>
         </div>
-    )
+    )}
+    return ( <>NeedAuth</>)
 }
 
 export default Catalog;

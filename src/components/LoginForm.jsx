@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef, useMemo, useCallback, useReducer } from 'react'
+import { useState, useEffect, useRef, useMemo, useCallback, useReducer, useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from './OnlineStore/AuthContext';
 import './RegisterForm.css';
 function LoginForm(props){
     const supabase = props.sender;
@@ -8,15 +9,17 @@ function LoginForm(props){
     const passRef = useRef(0);
     const [password, setPassword] = useState("");
     const LoginUser = props.action;
+    const {isAuth, setAuth} = useContext(AuthContext);
     let navigate = useNavigate();
 
     const setUser = props.setCurrentUser;
     const handleLogin = async (e) => {
+        setAuth(true);
         e.preventDefault();
         try {
             const user = await LoginUser(name, password);
             if(user){
-                inputRef.current.className = "form-input-succces";
+                inputRef.current.className = "form-input-succces";                
                 setUser(user);
                 navigate('/home');
             }
