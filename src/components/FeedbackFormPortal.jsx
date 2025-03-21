@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import FeedbackForm from './Feedbackform';
+import FeedbackForm from './FeedbackForm';
 
 const FeedbackFormPortal = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
