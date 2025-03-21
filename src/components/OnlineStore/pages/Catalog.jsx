@@ -3,7 +3,8 @@ import SupabaseContext from "../SupabaseContext"
 import { Link, useNavigate } from "react-router-dom";
 import { StyleContext } from "../StyleProvider";
 import { AuthContext } from "../AuthContext";
-
+import Category from "../Category";
+import "../../../styles/category.css"
 // const products = [
 //     {id: 1, name: "Dog Food", price: "$20"},
 //     {id: 2, name: "Cat Toy", price: "$5"},
@@ -49,18 +50,18 @@ function Catalog() {
     }
     if(isAuth){
     return (
+        <>
         
         <div class={`${theme}-theme`}>
-            <h1>Catalog</h1>
-            <ul>
+        <h1>Catalog</h1>
+            <ul class="catalog-wrap">
                 {categories.map(category => (
                     
-                    <li key={category.id}>
-                        <Link to={`/category/${category.id}`}>{category.name} - {category.price}</Link>
-                    </li>
+                    <Category category={category}/>
                 ))}
             </ul>
         </div>
+        </>
     )}
     navigate("/login")
     return ( <>NeedAuth</>)

@@ -1,0 +1,17 @@
+.category-item{
+      border: 1px solid #ccc;
+      padding: 20px;
+      text-align: center;
+      flex: 1 1 calc(25% - 20px);
+      box-sizing: border-box;
+      border-radius: 5px;
+}
+.catalog-wrap{
+
+    display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      list-style: none;
+      padding: 0;
+      margin: 10px;
+}

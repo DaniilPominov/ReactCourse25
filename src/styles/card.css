@@ -6,4 +6,5 @@ li{
 img{
     width:256px;
     height: 256px;
+    border-radius: 8px;
 }

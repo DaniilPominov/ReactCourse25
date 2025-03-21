@@ -5,7 +5,7 @@ import SupabaseContext from "../SupabaseContext";
 import { CartContext } from "../CartProvider";
 import { StyleContext } from "../StyleProvider";
 import ProductCard from "../ProductCard";
-
+import "../../../styles/category.css"
 function CategoryProducts() {
     const { id } = useParams();
     const [products, setProducts] = useState([]);
@@ -52,7 +52,7 @@ function CategoryProducts() {
         <div class={`${theme}-theme`}>
             <h1>Products in Category</h1>
             <h5>{id}</h5>
-            <ul>
+            <ul class="catalog-wrap">
                 {products.map(product => (
                     <ProductCard product={product} action={addToCart}/>
                 ))}

@@ -4,7 +4,7 @@ function ProductCard(props){
     const product = props.product;
     const addToCart = props.action;
     return (
-        <li key={product.id}>
+        <li key={product.id} class="category-item">
             <img src={product.product_img} alt={product.name} />
                         <h2>{product.name}</h2>
                         <p>{product.description}</p>
