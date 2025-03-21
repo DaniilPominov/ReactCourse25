@@ -54,7 +54,7 @@ function CategoryProducts() {
             <h5>{id}</h5>
             <ul class="catalog-wrap">
                 {products.map(product => (
-                    <ProductCard product={product} action={addToCart}/>
+                    <ProductCard actionDesc={"Add to cart"} product={product} action={addToCart}/>
                 ))}
             </ul>
         </div>

@@ -1,6 +1,7 @@
 import {React, useContext} from "react";
 import { CartContext } from "../CartProvider"
 import { StyleContext } from "../StyleProvider";
+import ProductCard from "../ProductCard";
 
 function Cart() {
     const { cartItems, removeFromCart } = useContext(CartContext);
@@ -15,11 +16,7 @@ function Cart() {
             ) : (
                 <ul>
                     {cartItems.map(item => 
-                        (<li key={item.id}>
-                            <h2>{item.name}</h2>
-                            <p>{item.price} * {item.quantity}</p>
-                            <button onClick={() => removeFromCart(item.id)}>Remove</button>
-                        </li>
+                        (<ProductCard actionDesc={"remove"} product={item} action ={removeFromCart}/>
                         ))}
                 </ul>
             )
