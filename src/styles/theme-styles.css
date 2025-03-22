@@ -1,7 +1,20 @@
 .dark-theme * {
-  color: red;
+  color: red;  
 }
 
 .light-theme * {
   color: blue;
 }/*# sourceMappingURL=theme-styles.css.map */
+.theme-button{
+  color: white;
+  background-color: black;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  float:right; 
+  transition: background-color 0.3s;
+}
+.theme-button:hover{
+
+  background-color: white;
+}

@@ -9,12 +9,31 @@ import "../../../styles/category.css"
 function CategoryProducts() {
     const { id } = useParams();
     const [products, setProducts] = useState([]);
+    const [categoryName, setCategoryName] = useState();
     const [loading, setLoading] = useState(true);
     const supabase = useContext(SupabaseContext);
     const {theme} = useContext(StyleContext);
     const { addToCart } = useContext(CartContext);
-
+    
     useEffect(() => {
+        async function fetchCategories() {
+            try {
+                const {data, error} = await supabase
+                    .from('categories')
+                    .select("*")
+                    .eq("id", id)
+                if (error) {
+                    console.error("Error fetching categories:", error)
+                } else {
+                    setCategoryName(data[0].name)
+                }
+    
+            } catch (err) {
+                console.error("Error fetching categories:", err)
+            } finally {
+                setLoading(false)
+            }
+        }
         async function fetchProducts() {
             
             try {
@@ -36,7 +55,9 @@ function CategoryProducts() {
         
         }
         fetchProducts().catch((error) => {
-            console.error("Error fetching products:", error);
+            console.error("Error fetching products:", error);});
+        fetchCategories().catch((error) => {
+            console.error("Error fetching categories:", error);
         });
     }, [id, supabase]);
 
@@ -50,8 +71,8 @@ function CategoryProducts() {
 
     return (
         <div class={`${theme}-theme`}>
-            <h1>Products in Category</h1>
-            <h5>{id}</h5>
+            <h5>Products in Category</h5>
+            <h4>{categoryName}</h4>
             <ul class="catalog-wrap">
                 {products.map(product => (
                     <ProductCard actionDesc={"Add to cart"} product={product} action={addToCart}/>

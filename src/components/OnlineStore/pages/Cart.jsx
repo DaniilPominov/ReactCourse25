@@ -2,7 +2,7 @@ import {React, useContext} from "react";
 import { CartContext } from "../CartProvider"
 import { StyleContext } from "../StyleProvider";
 import ProductCard from "../ProductCard";
-
+import "../../../styles/category.css"
 function Cart() {
     const { cartItems, removeFromCart,updateQuantity } = useContext(CartContext);
     const {theme} = useContext(StyleContext);
@@ -11,6 +11,7 @@ function Cart() {
     return (
         <div class={`${theme}-theme`}>
             <h2>Cart</h2>
+            <div class="catalog-wrap">
             {cartItems.length === 0 ? (
                 <p>The cart is empty yet :</p>
             ) : (
@@ -25,9 +26,9 @@ function Cart() {
                         ))}
                 </ul>
             )
-        }
+        }</div>
             <h2>Final price: {total.toFixed(2)}$</h2>
-        
+            
         </div>
     )
 }

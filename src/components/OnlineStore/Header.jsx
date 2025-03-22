@@ -7,8 +7,9 @@ function Header() {
     const {theme, changeTheme} = useContext(StyleContext);
     return (
         <header className={`header ${theme}-theme`}>
+            <button onClick={() => changeTheme()} class="theme-button"></button>
             <h1>Online Store</h1>
-            <button onClick={() => changeTheme()}>Toggle Theme</button>
+            
 
             <nav>
             <Link to="/">Main</Link>
