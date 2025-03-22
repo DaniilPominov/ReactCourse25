@@ -38,7 +38,9 @@ function Product() {
                 console.error("Error fetching products:", error);
             });
         }, [id, supabase]);
-
+        if(loading){
+            return <div>Loading...</div>
+        }
     return (
         <div className={`${theme}-theme`}>
             <h2>{product.name}</h2>

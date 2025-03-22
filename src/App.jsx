@@ -9,7 +9,7 @@ import {AuthContext} from "./components/OnlineStore/AuthContext"
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import "./styles/index.css"
-import { Route, Routes, Outlet } from 'react-router-dom';
+import { Route, Routes, Outlet, Navigate } from 'react-router-dom';
 import Cart from './components/OnlineStore/pages/Cart';
 // import Catalog from './components/OnlineStore/pages/Catalog';
 import Header from './components/OnlineStore/Header';
@@ -131,7 +131,12 @@ function App() {
       </>
     );
   };
-  
+  const ProtectedRoute = ({children }) => {
+    if (!isAuth) {
+      return <Navigate to="/login"/>;
+    }
+    return children;
+  }
 
   return (
     <>
@@ -142,12 +147,32 @@ function App() {
         <Suspense fallback={<div>now loading...</div>}>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route path="catalog" element={<Catalog />}/>
-              <Route path="cart" element={<Cart />}/>
-              <Route path="login" element={<LoginForm sender={supabase} setCurrentUser={setCurrentUser} action={GetUser} />}/>
-              <Route path="home" element={<Home />}/>
-              <Route path="category/:id" element={<CategoryProduct />}/>
-              <Route path="products/:id" element={<Product />}/>
+              <Route path="catalog" element={
+                <ProtectedRoute>
+                <Catalog />
+                </ProtectedRoute>
+                }/>
+              <Route path="cart" element={
+                <ProtectedRoute>
+                <Cart />
+                </ProtectedRoute>}/>
+              <Route path="login" element={
+
+                <LoginForm sender={supabase} setCurrentUser={setCurrentUser} action={GetUser} />
+                }/>
+              <Route path="home" element={
+                <ProtectedRoute>
+                <Home />
+                </ProtectedRoute>}/>
+              <Route path="category/:id" element={
+                <ProtectedRoute>
+                <CategoryProduct />
+                </ProtectedRoute>}/>
+              <Route path="products/:id" element={
+                <ProtectedRoute>
+                <Product />
+              </ProtectedRoute>}
+                />
               <Route path="*" element={
                 <h1>Page not found</h1>} />
             </Route>
