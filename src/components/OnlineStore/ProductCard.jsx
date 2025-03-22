@@ -8,7 +8,7 @@ function ProductCard(props){
     const path = "/products/"+product.id;
     return (
         <li key={product.id} class="category-item">
-            <Link to={path}>
+            <Link to={path} params={{action: addToCart}}>
             <img src={product.product_img} alt={product.name} />
                         <h2>{product.name}</h2>
                         </Link>

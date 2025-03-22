@@ -2,12 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
 import SupabaseContext from "../SupabaseContext";
+import { CartContext } from "../CartProvider";
 
 function Product() {
     const {id} = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const supabase = useContext(SupabaseContext);
+    const { addToCart } = useContext(CartContext);
+    
     useEffect(() => {
             async function fetchProducts() {
                 
@@ -43,6 +46,7 @@ function Product() {
             <img src={product.product_img} alt={product.name} />
             <p>О товаре: {product.description}</p>
             <p>Price: {product.price}</p>
+            <button onClick={() => addToCart(product)}>add to cart</button>
         </div>
     )
 }
