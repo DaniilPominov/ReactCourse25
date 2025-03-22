@@ -1,9 +1,11 @@
 import { React, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+
 import SupabaseContext from "../SupabaseContext";
 import { CartContext } from "../CartProvider";
 import { StyleContext } from "../StyleProvider";
+import '../../../styles/CategoryProduct.scss'
 
 function CategoryProducts() {
     const { id } = useParams();
@@ -48,11 +50,13 @@ function CategoryProducts() {
     }
 
     return (
-        <div class={`${theme}-theme`}>
+        <div class={`${theme}-theme category-products`}>
             <h1>Products in Category {id}</h1>
             <ul>
                 {products.map(product => (
-                    <li key={product.id}>
+                    <li class="product-item"
+                        key={product.id}>
+                        <img src={product.product_img}></img>
                         <h2>{product.name}</h2>
                         <p>{product.description}</p>
                         <p>Price: ${product.price}</p>

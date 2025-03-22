@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { StyleContext } from "../StyleProvider";
+import '../../../styles/Home.scss';
 
 function Home() {
     const {theme} = useContext(StyleContext);

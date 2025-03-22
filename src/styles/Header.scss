@@ -1,0 +1,122 @@
+@import './variables.scss';
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba($light-bg, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+  color: $light-text;
+
+  &-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $padding-medium 0;
+  }
+
+  &.dark-theme {
+    color: $dark-text;
+    background: rgba($dark-bg, 0.9);
+    border-bottom-color: rgba(255,255,255,0.1);
+  }
+
+  .logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(45deg, $primary-color, darken($primary-color, 15%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    transition: all 0.3s ease;
+  }
+
+  .main-nav {
+    display: flex;
+    gap: 2rem;
+    margin-left: auto;
+    margin-right: 2rem;
+
+    .nav-link {
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      padding: 0.5rem 0;
+      color: inherit;
+      transition: color 0.3s ease;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: $primary-color;
+        transition: width 0.3s ease;
+      }
+
+      &:hover {
+        color: $primary-color;
+
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba($primary-color, 0.1);
+      transform: scale(1.1);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .main-nav {
+      gap: 1rem;
+      margin-right: 1rem;
+
+      .nav-link {
+        font-size: 0.9rem;
+      }
+    }
+
+    .logo {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    &-content {
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .main-nav {
+      order: 3;
+      width: 100%;
+      justify-content: center;
+      margin: 0;
+    }
+  }
+}

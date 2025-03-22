@@ -1,0 +1,38 @@
+@import './styles/variables.scss';
+
+body {
+  width: 100%;
+  justify-content: center;
+}
+
+main {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.loading-fallback {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: $primary-color; // Используйте вашу переменную цвета
+  z-index: 1000;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 100vh;
+}
+
+.feedback-form-button {
+  position: relative;
+  left:50%;
+  transform: translateX(-50%);
+}

@@ -1,63 +1,74 @@
-import {React, useContext, useState, useEffect} from "react";
-import SupabaseContext from "../SupabaseContext"
+import { React, useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import SupabaseContext from "../SupabaseContext";
 import { StyleContext } from "../StyleProvider";
-
-// const products = [
-//     {id: 1, name: "Dog Food", price: "$20"},
-//     {id: 2, name: "Cat Toy", price: "$5"},
-//     {id: 3, name: "Fish Tank", price: "$50"}
-// ]
+import "../../../styles/Catalog.scss";
 
 function Catalog() {
-    const {theme} = useContext(StyleContext);
-    const supabase = useContext(SupabaseContext)
-    const [categories, setCategories] = useState([])
-    const [loading, setLoading] = useState(true)
+  const { theme } = useContext(StyleContext);
+  const supabase = useContext(SupabaseContext);
+  const [categories, setCategories] = useState([]);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        async function fetchCategories() {
-            try {
-                console.log(supabase);
-                const {data, error} = await supabase
-                    .from('categories')
-                    .select("*");
-                if (error) {
-                    console.error("Error fetching categories:", error)
-                } else {
-                    setCategories(data)
-                }
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('categories')
+          .select("*");
 
-            } catch (err) {
-                console.error("Error fetching categories:", err)
-            } finally {
-                setLoading(false)
-            }
+        if (error) throw error;
+        setCategories(data);
+      } catch (err) {
+        setError(err.message);
+      } 
+    };
 
-        }
-        fetchCategories().catch((err) => {
-            console.error("Error fetching categories:", err)
-            setLoading(false)
-        })
-    }, [supabase])
-    
-    if (loading) {
-        return <div>Loading...</div>
-    }
-    
+    fetchCategories();
+  }, [supabase]);
+
+  if (error) {
     return (
-        <div class={`${theme}-theme`}>
-            <h1>Catalog</h1>
-            <ul>
-                {categories.map(category => (
-                    
-                    <li key={category.id}>
-                        <Link to={`/category/${category.id}`}>{category.name} - {category.price}</Link>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    )
+      <div className={`error-message ${theme}-theme`}>
+        Error loading categories: {error}
+      </div>
+    );
+  }
+
+  return (
+    <div className={`catalog ${theme}-theme`}>
+      <div className="container">
+        <h1>Product Catalog</h1>
+        
+        {categories.length === 0 ? (
+          <div className="empty-state">
+            <div className="empty-icon">📂</div>
+            <p>No categories found</p>
+          </div>
+        ) : (
+          <ul className="categories-grid">
+            {categories.map(category => (
+              <li className="category-card" key={category.id}>
+                <Link 
+                  to={`/category/${category.id}`} 
+                  className="category-link"
+                >
+                  <div className="category-content">
+                    <h2 className="category-name">{category.name}</h2>
+                    {category.price && (
+                      <p className="category-price">
+                        From ${parseFloat(category.price).toFixed(2)}
+                      </p>
+                    )}
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default Catalog;

@@ -1,0 +1,113 @@
+@import './variables.scss';
+
+.feedback-form {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(3px);
+    
+    form {
+      background: #ffffff;
+      padding: 2.5rem;
+      border-radius: 16px;
+      width: 440px;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      
+      .close-btn {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          transform: rotate(90deg);
+          opacity: 0.8;
+        }
+        
+        &::before, &::after {
+          content: '';
+          position: absolute;
+          width: 18px;
+          height: 2px;
+          background: #6B7280;
+          top: 50%;
+          left: 50%;
+        }
+        
+        &::before { transform: translate(-50%, -50%) rotate(45deg); }
+        &::after { transform: translate(-50%, -50%) rotate(-45deg); }
+      }
+
+      h2 {
+        color: #1F2937;
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        font-weight: 600;
+      }
+      
+      label {
+        display: block;
+        margin-bottom: 1.5rem;
+        
+        span {
+          display: block;
+          color: #374151;
+          font-size: 0.95rem;
+          margin-bottom: 0.5rem;
+          font-weight: 500;
+        }
+        
+        input, textarea {
+          box-sizing: border-box;
+          width: 100%;
+          padding: 0.8rem 1.2rem;
+          border: 2px solid #E5E7EB;
+          border-radius: 8px;
+          font-size: 1rem;
+          transition: all 0.3s ease;
+          
+          &:focus {
+            outline: none;
+            border-color: $primary-color;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+          }
+        }
+        
+        textarea {
+          resize: vertical;
+          min-height: 100px;
+        }
+      }
+      
+      input[type="submit"] {
+        background: $primary-color;
+        border: none;
+        color: white;
+        padding: 0.8rem 2rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        width: 100%;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+        
+        &:hover {
+          background: darken($primary-color, 8%);
+          transform: translateY(-1px);
+        }
+      }
+    }
+  }

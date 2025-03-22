@@ -1,22 +1,23 @@
-import './App.css'
 import bcrypt from "bcryptjs";
+
 import { v4 as uuidv4 } from 'uuid';
-import { useState, useEffect, useRef, useMemo, useCallback, useReducer } from 'react'
+import React, {useState, useEffect, useRef, useMemo, useCallback, useReducer, Suspense } from 'react'
 import { SupabaseContext } from './components/OnlineStore/SupabaseContext'; 
 import { createClient } from '@supabase/supabase-js'
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import { Route, Routes, Outlet } from 'react-router-dom';
 import Cart from './components/OnlineStore/pages/Cart';
-import Catalog from './components/OnlineStore/pages/Catalog';
+const Catalog = React.lazy(() => import('./components/OnlineStore/pages/Catalog'));
 import Header from './components/OnlineStore/Header';
 import Footer from './components/OnlineStore/Footer';
-import CategoryProduct from './components/OnlineStore/pages/CategoryProduct';
+const CategoryProduct = React.lazy(() => import('./components/OnlineStore/pages/CategoryProduct'));
 import Home from './components/OnlineStore/pages/Home';
 import Product from './components/OnlineStore/pages/Product';
 import CartProvider from './components/OnlineStore/CartProvider';
 import FeedbackFormPortal from './components/FeedbackFormPortal';
 import { StyleProvider } from './components/OnlineStore/StyleProvider';
+import './App.scss';
 const supabaseUrl = "https://svgxutgdnhlkdlwscmmq.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN2Z3h1dGdkbmhsa2Rsd3NjbW1xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE4NjIxNjksImV4cCI6MjA1NzQzODE2OX0.DA1gIxs7tBlYflBJPJe_niRMtV9pIIiREyxdoBmdVno";
 
@@ -54,7 +55,6 @@ function App() {
         if (data && data.length > 0) {
           setUsers((prevUsers) => [...prevUsers, data[0]]);
         }
-        
       }
     }
       catch (err) {
@@ -109,13 +109,13 @@ function App() {
 
   const Layout = () => {
     return (
-      <>
+      <div className="App">
         <Header />
         <main>
           <Outlet />
         </main>
         <Footer />
-      </>
+      </div>
     );
   };
 
@@ -124,18 +124,22 @@ function App() {
     <SupabaseContext.Provider value={supabase}>
       <StyleProvider>
         <CartProvider>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route path="catalog" element={<Catalog />}/>
-              <Route path="cart" element={<Cart />}/>
-              <Route path="home" element={<Home />}/>
-              <Route path="category/:id" element={<CategoryProduct />}/>
-              <Route path="products/:id" element={<Product />}/>
-              <Route path="*" element={
-                <h1>Page not found</h1>} />
-            </Route>
-
-          </Routes>
+          
+            <Routes>
+                  <Route path="/" element={<Layout />}>
+                      <Route path="catalog" element={
+                        <Suspense fallback={<div class="loading-fallback">Please wait...</div>}>
+                          <Catalog />
+                        </Suspense>
+                      }/>
+                      <Route path="cart" element={<Cart />}/>
+                      <Route path="home" element={<Home />}/>
+                      <Route path="category/:id" element={<CategoryProduct />}/>
+                      <Route path="products/:id" element={<Product />}/>
+                      <Route path="*" element={
+                        <h1>Page not found</h1>} />
+                  </Route>
+            </Routes>
         </CartProvider>
       </StyleProvider>
     </SupabaseContext.Provider>
@@ -158,7 +162,7 @@ function App() {
           <button onClick={() => dispatch({ type: "Decrement" })}>-</button>
         </div> */}
 
-        <button onClick={openForm}>Open Form</button>
+        <button className="feedback-form-button" onClick={openForm}>Leave feedback</button>
             <FeedbackFormPortal
             isOpen={isFormOpen}
             onClose={closeForm}
