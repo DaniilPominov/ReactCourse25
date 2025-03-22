@@ -1,16 +1,14 @@
-import {React, useContext, useState, useEffect} from "react";
+import {React, useContext, useState, useEffect, lazy} from "react";
 import SupabaseContext from "../SupabaseContext"
 import { Link, useNavigate } from "react-router-dom";
 import { StyleContext } from "../StyleProvider";
 import { AuthContext } from "../AuthContext";
-import Category from "../Category";
+//import Category from "../Category";
 import "../../../styles/category.css"
-// const products = [
-//     {id: 1, name: "Dog Food", price: "$20"},
-//     {id: 2, name: "Cat Toy", price: "$5"},
-//     {id: 3, name: "Fish Tank", price: "$50"}
-// ]
-
+const Category = lazy(() => delay(import("../Category")))
+const delay = (promise) => {
+    return new Promise(resolve => setTimeout(resolve, 1000)).then(() => promise);
+}
 function Catalog() {
     const navigate = useNavigate();
     const {isAuth, setAuth} = useContext(AuthContext);
@@ -18,11 +16,10 @@ function Catalog() {
     const supabase = useContext(SupabaseContext)
     const [categories, setCategories] = useState([])
     const [loading, setLoading] = useState(true)
-
+    
     useEffect(() => {
         async function fetchCategories() {
             try {
-                console.log(supabase);
                 const {data, error} = await supabase
                     .from('categories')
                     .select("*");
@@ -45,9 +42,9 @@ function Catalog() {
         })
     }, [supabase])
     
-    if (loading) {
-        return <div>Loading...</div>
-    }
+    // if (loading) {
+    //     return <div>Loading...</div>
+    // }
     if(isAuth){
     return (
         <>

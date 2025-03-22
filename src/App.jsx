@@ -1,4 +1,5 @@
 import './App.css'
+import { lazy, Suspense } from 'react';
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect, useRef, useMemo, useCallback, useReducer } from 'react'
@@ -10,7 +11,7 @@ import RegisterForm from './components/RegisterForm';
 import "./styles/index.css"
 import { Route, Routes, Outlet } from 'react-router-dom';
 import Cart from './components/OnlineStore/pages/Cart';
-import Catalog from './components/OnlineStore/pages/Catalog';
+// import Catalog from './components/OnlineStore/pages/Catalog';
 import Header from './components/OnlineStore/Header';
 import Footer from './components/OnlineStore/Footer';
 import CategoryProduct from './components/OnlineStore/pages/CategoryProduct';
@@ -19,6 +20,7 @@ import Product from './components/OnlineStore/pages/Product';
 import CartProvider from './components/OnlineStore/CartProvider';
 import FeedbackFormPortal from './components/FeedbackFormPortal';
 import { StyleProvider } from './components/OnlineStore/StyleProvider';
+
 const supabaseUrl = "https://svgxutgdnhlkdlwscmmq.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN2Z3h1dGdkbmhsa2Rsd3NjbW1xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE4NjIxNjksImV4cCI6MjA1NzQzODE2OX0.DA1gIxs7tBlYflBJPJe_niRMtV9pIIiREyxdoBmdVno";
 
@@ -125,13 +127,17 @@ function App() {
       </>
     );
   };
+  const Catalog = lazy(() => import("./components/OnlineStore/pages/Catalog"))
+
   return (
     <>
     <AuthContext.Provider value={{isAuth, setAuth}}>
     <SupabaseContext.Provider value={supabase}>
       <StyleProvider>
         <CartProvider>
+        <Suspense fallback={<div>now loading...</div>}>
           <Routes>
+            
             <Route path="/" element={<Layout />}>
               <Route path="catalog" element={<Catalog />}/>
               <Route path="cart" element={<Cart />}/>
@@ -142,8 +148,9 @@ function App() {
               <Route path="*" element={
                 <h1>Page not found</h1>} />
             </Route>
-
+            
           </Routes>
+          </Suspense>
         </CartProvider>
       </StyleProvider>
     </SupabaseContext.Provider>

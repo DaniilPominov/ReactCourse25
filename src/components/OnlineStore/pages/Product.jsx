@@ -6,7 +6,7 @@ import { CartContext } from "../CartProvider";
 
 function Product() {
     const {id} = useParams();
-    const [product, setProduct] = useState(null);
+    const [product, setProduct] = useState(0);
     const [loading, setLoading] = useState(true);
     const supabase = useContext(SupabaseContext);
     const { addToCart } = useContext(CartContext);
@@ -36,9 +36,6 @@ function Product() {
                 console.error("Error fetching products:", error);
             });
         }, [id, supabase]);
-    if (loading) {
-        return <h1>Loading...</h1>
-    }
 
     return (
         <div>
