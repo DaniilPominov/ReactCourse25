@@ -71,7 +71,6 @@ function CategoryProducts() {
 
     return (
         <div class={`${theme}-theme`}>
-            <h5>Products in Category</h5>
             <h4>{categoryName}</h4>
             <ul class="catalog-wrap">
                 {products.map(product => (

@@ -5,12 +5,15 @@ function Category(props){
     const category = props.category;
     return (
         <li key={category.id} class="category-item">
-                        <Link to={`/category/${category.id}`}><div>
-                            {category.name} 
-                            </div>
+                        <Link to={`/category/${category.id}`}>
                             <div>
                             <img src={category.category_img}></img>
-                            </div></Link>
+                            </div>
+                            <div>
+                            {category.name} 
+                            </div>
+                            </Link>
+                            
                         
                     </li>
     )

@@ -15,7 +15,7 @@ function Cart() {
             {cartItems.length === 0 ? (
                 <p>The cart is empty yet :</p>
             ) : (
-                <ul>
+                <ul class="catalog-wrap">
                     {cartItems.map(item => 
 
                         (<ProductCard actionDesc={"remove"} product={item} action ={removeFromCart}>

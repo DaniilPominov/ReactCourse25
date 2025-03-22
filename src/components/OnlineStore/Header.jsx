@@ -2,12 +2,13 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { StyleContext } from "./StyleProvider";
 import "../../styles/theme-styles.css"; 
+import "../../styles/header.css"; 
 
 function Header() {
     const {theme, changeTheme} = useContext(StyleContext);
     return (
         <header className={`header ${theme}-theme`}>
-            <button onClick={() => changeTheme()} class="theme-button"></button>
+            <button onClick={() => changeTheme()} class="theme-button">☀️</button>
             <h1>Online Store</h1>
             
 

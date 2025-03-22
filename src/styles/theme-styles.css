@@ -1,17 +1,22 @@
 .dark-theme * {
-  color: red;  
+  color: rgb(191, 191, 191);  
 }
 
 .light-theme * {
   color: blue;
 }/*# sourceMappingURL=theme-styles.css.map */
 .theme-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
   color: white;
-  background-color: black;
+  text-align: center;
   padding: 10px;
   border: none;
   cursor: pointer;
-  float:right; 
+  float:left; 
   transition: background-color 0.3s;
 }
 .theme-button:hover{

@@ -4,6 +4,10 @@
       flex: 1 1 calc(25% - 20px);
       box-sizing: border-box;
       border-radius: 5px;
+      transition: padding-top 0.3s ease;
+}
+.category-item:hover{
+      padding-top: 2px;
 }
 .catalog-wrap{
 
