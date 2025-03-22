@@ -49,7 +49,22 @@ function App() {
   const [isAuth,setAuth] = useState();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const openForm = () => setIsFormOpen(true);
-  const closeForm = () => setIsFormOpen(false)
+  const closeForm = (data) => {
+    
+    let otzivData = localStorage.getItem("otziv");
+
+    
+    let otziv = otzivData ? JSON.parse(otzivData) : [];
+
+    
+    otziv.push(data);
+
+    
+    localStorage.setItem("otziv", JSON.stringify(otziv));
+
+    
+    setIsFormOpen(false);
+};
 
   const addUser = async (name,password) => {
     if(!name) return;
