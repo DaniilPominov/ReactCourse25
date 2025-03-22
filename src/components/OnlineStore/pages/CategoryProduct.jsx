@@ -71,7 +71,7 @@ function CategoryProducts() {
 
     return (
         <div class={`${theme}-theme`}>
-            <h4>{categoryName}</h4>
+            <h3>{categoryName}</h3>
             <ul class="catalog-wrap">
                 {products.map(product => (
                     <ProductCard actionDesc={"Add to cart"} product={product} action={addToCart}/>

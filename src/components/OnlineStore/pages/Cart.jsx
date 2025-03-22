@@ -19,9 +19,9 @@ function Cart() {
                     {cartItems.map(item => 
 
                         (<ProductCard actionDesc={"remove"} product={item} action ={removeFromCart}>
-                            <button onClick={() => updateQuantity(item, item.quantity - 1)}> - </button>
+                            <button class="cart-button" onClick={() => updateQuantity(item, item.quantity - 1)}> - </button>
                             {item.quantity}
-                            <button onClick={() => updateQuantity(item, item.quantity + 1)}> + </button>
+                            <button class="cart-button" onClick={() => updateQuantity(item, item.quantity + 1)}> + </button>
                             </ProductCard>
                         ))}
                 </ul>

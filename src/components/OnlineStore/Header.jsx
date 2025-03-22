@@ -9,11 +9,11 @@ function Header() {
     return (
         <header className={`header ${theme}-theme`}>
             <button onClick={() => changeTheme()} class="theme-button">☀️</button>
-            <h1>Online Store</h1>
+            <h1>PetShop</h1>
             
 
             <nav>
-            <Link to="/">Main</Link>
+            <Link to="/main">Main</Link>
             <Link to="/catalog">Catalog</Link>
             <Link to="/cart">Cart</Link>
             </nav>

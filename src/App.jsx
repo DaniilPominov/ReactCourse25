@@ -20,6 +20,7 @@ import Home from './components/OnlineStore/pages/Home';
 import CartProvider from './components/OnlineStore/CartProvider';
 import FeedbackFormPortal from './components/FeedbackFormPortal';
 import { StyleProvider } from './components/OnlineStore/StyleProvider';
+import Main from './components/Main';
 
 
 const supabaseUrl = "https://svgxutgdnhlkdlwscmmq.supabase.co";
@@ -159,6 +160,10 @@ function App() {
               <Route path="cart" element={
                 <ProtectedRoute>
                   <Cart />
+                </ProtectedRoute>}/>
+                <Route path="main" element={
+                <ProtectedRoute>
+                  <Main />
                 </ProtectedRoute>}/>
               <Route path="login" element={
 
