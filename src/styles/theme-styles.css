@@ -1,9 +1,16 @@
-.dark-theme * {
-  color: rgb(191, 191, 191);  
-}
-
 .light-theme * {
-  color: blue;
+  color: rgb(255, 255, 255);  
+}
+.dark-theme-background *{
+  background: rgb(33, 33, 32);
+  /* background: linear-gradient(90deg, rgba(82,47,0,1) 0%, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0) 90%, rgba(82,47,0,1) 100%); */
+}
+.ligt-theme-background *{
+  background: rgb(215, 215, 215);
+  /* background: linear-gradient(90deg, rgba(82,47,0,1) 0%, rgb(255, 255, 255) 10%, rgb(255, 255, 255) 90%, rgba(82,47,0,1) 100%); */
+}
+.dark-theme * {
+  color: rgb(116, 116, 116);
 }/*# sourceMappingURL=theme-styles.css.map */
 .theme-button{
   display: flex;

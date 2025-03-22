@@ -1,5 +1,5 @@
 import './App.css'
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useContext } from 'react';
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect, useRef, useMemo, useCallback, useReducer } from 'react'
@@ -19,7 +19,7 @@ import Home from './components/OnlineStore/pages/Home';
 //import Product from './components/OnlineStore/pages/Product';
 import CartProvider from './components/OnlineStore/CartProvider';
 import FeedbackFormPortal from './components/FeedbackFormPortal';
-import { StyleProvider } from './components/OnlineStore/StyleProvider';
+import { StyleContext, StyleProvider } from './components/OnlineStore/StyleProvider';
 import Main from './components/Main';
 
 
@@ -117,10 +117,11 @@ function App() {
   const userCount = useMemo (() => users.length, [users])
 
   const Layout = () => {
+    const {theme} = useContext(StyleContext);
     return (
       <>
         <Header />
-        <main>
+        <main class={`${theme}-theme-background`}>
           <Outlet />
           
             

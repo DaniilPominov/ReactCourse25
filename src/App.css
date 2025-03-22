@@ -13,10 +13,7 @@
 section{
   padding: 10px;
 }
-html{
-  background: rgb(82,47,0);
-  background: linear-gradient(90deg, rgba(82,47,0,1) 0%, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, rgba(82,47,0,1) 100%);
-}
+
 .logo {
   height: 6em;
   padding: 1.5em;
