@@ -121,13 +121,17 @@ function App() {
         <Header />
         <main>
           <Outlet />
-          <button onClick={openForm}>Open Form</button>
-            <FeedbackFormPortal
+          
+            
+        </main>
+        <Footer>
+        <button onClick={openForm}>leave a comment</button>
+        <FeedbackFormPortal
             isOpen={isFormOpen}
             onClose={closeForm}
             />
-        </main>
-        <Footer />
+        </Footer>
+        
       </>
     );
   };
@@ -149,12 +153,12 @@ function App() {
             <Route path="/" element={<Layout />}>
               <Route path="catalog" element={
                 <ProtectedRoute>
-                <Catalog />
+                  <Catalog />
                 </ProtectedRoute>
                 }/>
               <Route path="cart" element={
                 <ProtectedRoute>
-                <Cart />
+                  <Cart />
                 </ProtectedRoute>}/>
               <Route path="login" element={
 
@@ -162,15 +166,15 @@ function App() {
                 }/>
               <Route path="home" element={
                 <ProtectedRoute>
-                <Home />
+                  <Home />
                 </ProtectedRoute>}/>
               <Route path="category/:id" element={
                 <ProtectedRoute>
-                <CategoryProduct />
+                  <CategoryProduct />
                 </ProtectedRoute>}/>
               <Route path="products/:id" element={
                 <ProtectedRoute>
-                <Product />
+                 <Product />
               </ProtectedRoute>}
                 />
               <Route path="*" element={

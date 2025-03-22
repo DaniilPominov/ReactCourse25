@@ -1,9 +1,10 @@
 import React from "react";
 
-function Footer() {
+function Footer({children }) {
     return (
         <footer>
             <p>2025 PetShop. All rights reserved.</p>
+            {children}
         </footer>
     )
 }

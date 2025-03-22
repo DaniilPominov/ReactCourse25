@@ -4,7 +4,7 @@ import { StyleContext } from "../StyleProvider";
 import ProductCard from "../ProductCard";
 
 function Cart() {
-    const { cartItems, removeFromCart } = useContext(CartContext);
+    const { cartItems, removeFromCart,updateQuantity } = useContext(CartContext);
     const {theme} = useContext(StyleContext);
     const total = cartItems.reduce((sum, item) => sum + parseFloat(item.price) * item.quantity, 0);
 
@@ -12,11 +12,16 @@ function Cart() {
         <div class={`${theme}-theme`}>
             <h2>Cart</h2>
             {cartItems.length === 0 ? (
-                <p>The cart is empty yet :(</p>
+                <p>The cart is empty yet :</p>
             ) : (
                 <ul>
                     {cartItems.map(item => 
-                        (<ProductCard actionDesc={"remove"} product={item} action ={removeFromCart}/>
+
+                        (<ProductCard actionDesc={"remove"} product={item} action ={removeFromCart}>
+                            <button onClick={() => updateQuantity(item, item.quantity - 1)}> - </button>
+                            {item.quantity}
+                            <button onClick={() => updateQuantity(item, item.quantity + 1)}> + </button>
+                            </ProductCard>
                         ))}
                 </ul>
             )
