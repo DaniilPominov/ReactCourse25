@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-
+import "../../../styles/theme-styles.css";
 import { useParams } from "react-router-dom";
 import SupabaseContext from "../SupabaseContext";
 import { CartContext } from "../CartProvider";
+import { StyleContext } from "../StyleProvider";
 
 function Product() {
     const {id} = useParams();
@@ -10,6 +11,7 @@ function Product() {
     const [loading, setLoading] = useState(true);
     const supabase = useContext(SupabaseContext);
     const { addToCart } = useContext(CartContext);
+    const {theme} = useContext(StyleContext);
     
     useEffect(() => {
             async function fetchProducts() {
@@ -38,7 +40,7 @@ function Product() {
         }, [id, supabase]);
 
     return (
-        <div>
+        <div className={`${theme}-theme`}>
             <h2>{product.name}</h2>
             <img src={product.product_img} alt={product.name} />
             <p>О товаре: {product.description}</p>

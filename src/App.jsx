@@ -25,7 +25,7 @@ import { StyleProvider } from './components/OnlineStore/StyleProvider';
 const supabaseUrl = "https://svgxutgdnhlkdlwscmmq.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN2Z3h1dGdkbmhsa2Rsd3NjbW1xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE4NjIxNjksImV4cCI6MjA1NzQzODE2OX0.DA1gIxs7tBlYflBJPJe_niRMtV9pIIiREyxdoBmdVno";
 const Catalog = lazy(() => import("./components/OnlineStore/pages/Catalog"))
-const Product = lazy(() => delay(import("./components/OnlineStore/pages/Product")))     
+const Product = lazy(() => import("./components/OnlineStore/pages/Product"))     
 const CategoryProduct = lazy(() => import("./components/OnlineStore/pages/CategoryProduct"))   
 const supabase = createClient(supabaseUrl, supabaseKey)
 const delay = (promise) => {
