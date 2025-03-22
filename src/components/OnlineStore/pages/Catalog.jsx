@@ -5,10 +5,7 @@ import { StyleContext } from "../StyleProvider";
 import { AuthContext } from "../AuthContext";
 //import Category from "../Category";
 import "../../../styles/category.css"
-const Category = lazy(() => delay(import("../Category")))
-const delay = (promise) => {
-    return new Promise(resolve => setTimeout(resolve, 1000)).then(() => promise);
-}
+const Category = lazy(() => import("../Category"))
 function Catalog() {
     const navigate = useNavigate();
     const {isAuth, setAuth} = useContext(AuthContext);

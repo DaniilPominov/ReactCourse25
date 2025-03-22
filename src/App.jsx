@@ -14,19 +14,23 @@ import Cart from './components/OnlineStore/pages/Cart';
 // import Catalog from './components/OnlineStore/pages/Catalog';
 import Header from './components/OnlineStore/Header';
 import Footer from './components/OnlineStore/Footer';
-import CategoryProduct from './components/OnlineStore/pages/CategoryProduct';
+//import CategoryProduct from './components/OnlineStore/pages/CategoryProduct';
 import Home from './components/OnlineStore/pages/Home';
-import Product from './components/OnlineStore/pages/Product';
+//import Product from './components/OnlineStore/pages/Product';
 import CartProvider from './components/OnlineStore/CartProvider';
 import FeedbackFormPortal from './components/FeedbackFormPortal';
 import { StyleProvider } from './components/OnlineStore/StyleProvider';
 
+
 const supabaseUrl = "https://svgxutgdnhlkdlwscmmq.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN2Z3h1dGdkbmhsa2Rsd3NjbW1xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE4NjIxNjksImV4cCI6MjA1NzQzODE2OX0.DA1gIxs7tBlYflBJPJe_niRMtV9pIIiREyxdoBmdVno";
-
-        
+const Catalog = lazy(() => import("./components/OnlineStore/pages/Catalog"))
+const Product = lazy(() => delay(import("./components/OnlineStore/pages/Product")))     
+const CategoryProduct = lazy(() => import("./components/OnlineStore/pages/CategoryProduct"))   
 const supabase = createClient(supabaseUrl, supabaseKey)
-
+const delay = (promise) => {
+  return new Promise(resolve => setTimeout(resolve, 1000)).then(() => promise);
+}
 const reducer = (state, action) => {
   switch (action.type) {
     case "Increment":
@@ -127,7 +131,7 @@ function App() {
       </>
     );
   };
-  const Catalog = lazy(() => import("./components/OnlineStore/pages/Catalog"))
+  
 
   return (
     <>
@@ -137,7 +141,6 @@ function App() {
         <CartProvider>
         <Suspense fallback={<div>now loading...</div>}>
           <Routes>
-            
             <Route path="/" element={<Layout />}>
               <Route path="catalog" element={<Catalog />}/>
               <Route path="cart" element={<Cart />}/>
